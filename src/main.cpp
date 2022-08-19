@@ -1,5 +1,48 @@
 #include "..\lib\global.h"
+#include <cstdlib>
 using namespace std;
+void menu();
+void jugar();
+void puntuaciones(int a);
+void menu()
+{
+	ShowConsoleCursor(true);
+	bool repetir=true;
+	int opcion;
+    int a;
+
+	do{
+		system("cls");
+		cout<<"\n\t\t\t\tJUEGO ""LA SERPIENTE""\n";
+
+		cout<<"\n\t1. JUGAR\n";
+		cout<<"\n\t2. MOSTRAR ULTIMAS PUNTUACIONES\n";
+		cout<<"\n\t3. SALIR\n";
+
+		cout<<"\n\tOpcion: ";
+		cin>>opcion;
+		switch(opcion)
+		{
+			case 1:
+             a++;
+            system("cls");
+            jugar();
+			break;
+
+			case 2:
+            system("cls");
+            puntuaciones(a);
+			break;
+
+			case 3:
+            repetir=false;
+			break;
+		}
+
+
+	}while (repetir); 
+}
+
 
 void guardarPos(){
 	cuerpo[indice][0]=x;
@@ -81,23 +124,27 @@ void cambiarVel(){
 	}
 }
 
-int main()
+void jugar()
+
 {
-	ShowConsoleCursor(false);
+	x=10;
+	y=12;
+	dir=3;
+    ShowConsoleCursor(false);
 	setColor(BLACK, CYAN);
 	xc=(rand()%95)+2;
 	yc=(rand()%18+6);
 	gotoxy(xc,yc);
 	cout<<char(254);
 	margin();
-	while(tecla != ESC && !terminarJuego()){	
+	while(tecla != ESC && !terminarJuego()){
 		borrarCuerpo();
 		guardarPos();
 		pintarCuerpo();
 		crearComida();
 		printPuntos();
 		input();
-		input();
+		input();	
 		cambiarVel();
 		switch(dir){
 			case 1: y--; break;
@@ -110,8 +157,29 @@ int main()
 		else
 			usleep(vel*1.5);
 	}
-	end();
+    end();
+
+}
+
+void puntuaciones(int a)
+{
+    for (int i = 0; i < a; i++)
+    {
+        gotoxy(5, i+3);
+        cout<<"SCORE: "<<score;
+    }
+    end();
+
+}
+
+int main()
+{
+	menu();
 }		
+
+
+//Menu con seleccion de flecha
+//Puntajes altos que se guardan entre cada ejecucion.	
 
 
 //Menu con seleccion de flecha

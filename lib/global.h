@@ -12,6 +12,7 @@ using namespace std;
 
 int cuerpo[200][2];
 int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
+bool game;
 char tecla;
 enum colors{
     BLACK=0,

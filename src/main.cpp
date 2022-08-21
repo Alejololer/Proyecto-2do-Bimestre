@@ -3,23 +3,29 @@
 using namespace std;
 void jugar();
 
-void sortearScore(){
-	int x=1;
-	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
-		return a.pun>b.pun;
-	});
-	for (auto &&i : lstPuntajes)
-	{
-		i.pos=x;
-		x++;
+void reiniciarData(){
+	string input;
+	gotoxy(7,8);
+	cout<<"Ingrese la clave para reiniciar los datos: ";
+	ShowConsoleCursor(true);
+	cin>>input;
+	ShowConsoleCursor(false);
+	cin.ignore(10000, '\n');
+	if(input==clave){
+		for (auto &&i : lstPuntajes)
+		{
+			char aux[10]="-";
+			i.pun=0;
+			strncpy(i.nombre, aux, 10);
+		}
+		gotoxy(7,9);
+		cout<<"Puntajes reiniciados!";
 	}
-	
-}
-
-void invertirScore(){
-	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
-		return a.pun<b.pun;
-	});
+	else{
+		gotoxy(7,9);
+		cout<<"Clave incorrecta!";
+		return;
+	}
 }
 
 bool leerArchivoBinario()
@@ -76,7 +82,9 @@ void menu()
 		gotoxy(7, 9);
 		cout<<"\n\t2. MOSTRAR PUNTUACIONES\n";
 		gotoxy(7, 10);
-		cout<<"\n\t3. SALIR\n";
+		cout<<"\n\t3. RESETEAR PUNTAJE\n";
+		gotoxy(7, 11);
+		cout<<"\n\t4. SALIR\n";
 
 		do{
 			tecla=getch();
@@ -87,13 +95,13 @@ void menu()
 			opcionsel--;
 			if (opcionsel == 0)
 			{
-				opcionsel=3;
+				opcionsel=4;
 			}
 			break;
 
 			case ABAJO: 
 			opcionsel++;
-			if (opcionsel == 4)
+			if (opcionsel == 5)
 			{
 				opcionsel=1;
 			}
@@ -127,6 +135,14 @@ void menu()
 			break;
 
 			case 3:
+			system("cls");
+			margin();
+			reiniciarData();
+			cont();
+			menu();
+			break;
+
+			case 4:
             repetir=false;
 			system("cls");
 			break;		
@@ -168,31 +184,7 @@ tecla;
 			usleep(vel*1.5);
 	}
 	invertirScore();
-	for (auto &&i : lstPuntajes)
-	{
-		puntaje p;
-		if(score>i.pun){
-			p.pos=i.pos;
-			p.pun=score;
-			system("cls");
-			margin();
-			gotoxy(7,8);
-			cout<<"Puntaje alto!";
-			gotoxy(7,9);
-			cout<<"Ingrese su nombre: ";
-			ShowConsoleCursor(true);
-			cin>>p.nombre;
-			ShowConsoleCursor(false);
-			cin.ignore(10000, '\n');
-			lstPuntajes.push_back(p);
-			sortearScore();
-			lstPuntajes.pop_back();
-			escribirArchivoBinario();
-    		cont();
-			break;
-		}
-	}
-
+	chequearScore();
 }
 
 int main()

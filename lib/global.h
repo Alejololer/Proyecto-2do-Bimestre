@@ -21,6 +21,7 @@ int cuerpo[200][2];
 int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
 bool game;
 char tecla;
+const string clave="TA1997";
 enum colors{
     BLACK=0,
     BLUE=1,
@@ -48,6 +49,26 @@ struct puntaje{
 vector <puntaje> lstPuntajes;
 const string pathfile= "..\\resources\\scores.txt";
 const string pathfilebin= "..\\resources\\scores.dat";
+
+
+void sortearScore(){
+	int x=1;
+	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
+		return a.pun>b.pun;
+	});
+	for (auto &&i : lstPuntajes)
+	{
+		i.pos=x;
+		x++;
+	}
+	
+}
+
+void invertirScore(){
+	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
+		return a.pun<b.pun;
+	});
+}
 
 void escribirArchivoBinario()
 {
@@ -221,5 +242,32 @@ void cambiarVel(){
 	if(score == m*2){
 		vel-=5000;
 		m++;
+	}
+}
+
+void chequearScore(){
+	for (auto &&i : lstPuntajes)
+	{
+		puntaje p;
+		if(score>i.pun){
+			p.pos=i.pos;
+			p.pun=score;
+			system("cls");
+			margin();
+			gotoxy(7,8);
+			cout<<"Puntaje alto!";
+			gotoxy(7,9);
+			cout<<"Ingrese su nombre: ";
+			ShowConsoleCursor(true);
+			cin>>p.nombre;
+			ShowConsoleCursor(false);
+			cin.ignore(10000, '\n');
+			lstPuntajes.push_back(p);
+			sortearScore();
+			lstPuntajes.pop_back();
+			escribirArchivoBinario();
+    		cont();
+			break;
+		}
 	}
 }

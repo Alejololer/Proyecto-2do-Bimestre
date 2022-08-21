@@ -43,7 +43,7 @@ void presentarPuntaje(puntaje p)
     setColor(BLACK,BROWN);
 	gotoxy(7,p.pos+8);
     cout<<p.pos<<". "<<p.nombre;
-	gotoxy(18,p.pos+8);
+	gotoxy(25,p.pos+8);
 	cout<<"Score: "<<p.pun<<endl;
 }
 
@@ -122,7 +122,7 @@ void menu()
 			margin();
 			sortearScore();
 			presentarPuntajes();
-			end();
+			cont();
 			menu();
 			break;
 
@@ -188,7 +188,7 @@ tecla;
 			sortearScore();
 			lstPuntajes.pop_back();
 			escribirArchivoBinario();
-    		end();
+    		cont();
 			break;
 		}
 	}

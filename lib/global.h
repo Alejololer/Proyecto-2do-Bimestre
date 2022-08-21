@@ -52,7 +52,6 @@ const string pathfilebin= "..\\resources\\scores.dat";
 void escribirArchivoBinario()
 {
     ofstream f(pathfilebin, ios::out | ios_base::binary );
-    cout << endl << "Escribir archivo: " << pathfilebin << endl;
     if(f.good())
     {
         for (auto &&prov : lstPuntajes)  // { [*],[*],[*]...}

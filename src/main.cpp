@@ -1,136 +1,146 @@
 #include "..\lib\global.h"
 #include <cstdlib>
 using namespace std;
-void menu();
 void jugar();
-void puntuaciones(int a);
+
+void sortearScore(){
+	int x=1;
+	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
+		return a.pun>b.pun;
+	});
+	for (auto &&i : lstPuntajes)
+	{
+		i.pos=x;
+		x++;
+	}
+	
+}
+
+void invertirScore(){
+	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
+		return a.pun<b.pun;
+	});
+}
+
+bool leerArchivoBinario()
+{
+    ifstream rf(pathfilebin, ios::in | ios::binary);
+    cout << "Abrir archivo:" << pathfilebin << endl;
+    if(!rf) 
+    {
+        cout << " << error >>" << endl;
+        return false;
+    } 
+    puntaje tp[1];
+    while(rf.read((char *) &tp[0], sizeof(puntaje)))
+        lstPuntajes.push_back(tp[0]);
+    rf.close();
+    return true;
+}
+
+void presentarPuntaje(puntaje p)
+{
+    setColor(BLACK,BROWN);
+	gotoxy(7,p.pos+8);
+    cout<<p.pos<<". "<<p.nombre;
+	gotoxy(18,p.pos+8);
+	cout<<"Score: "<<p.pun<<endl;
+}
+
+void presentarPuntajes(){
+	gotoxy(7,8);
+	cout<<"Puntajes altos";
+	for (auto &&i : lstPuntajes)
+	{
+		presentarPuntaje(i);
+	}
+	
+}
+
 void menu()
 {
-	ShowConsoleCursor(true);
 	bool repetir=true;
-	int opcion;
-    int a;
-
+	int opcion;	
+	int opcionsel=1; 
+	int mayor=0;
 	do{
+		
 		system("cls");
-		cout<<"\n\t\t\t\tJUEGO ""LA SERPIENTE""\n";
+		margin();
 
+		gotoxy(4,8+opcionsel);
+		cout<<"==> ";
+
+		gotoxy(7, 8);
 		cout<<"\n\t1. JUGAR\n";
-		cout<<"\n\t2. MOSTRAR ULTIMAS PUNTUACIONES\n";
+		gotoxy(7, 9);
+		cout<<"\n\t2. MOSTRAR PUNTUACIONES\n";
+		gotoxy(7, 10);
 		cout<<"\n\t3. SALIR\n";
 
-		cout<<"\n\tOpcion: ";
-		cin>>opcion;
-		switch(opcion)
+		do{
+			tecla=getch();
+		} while (tecla != ARRIBA && tecla != ABAJO && tecla != ENTER);
+		switch (tecla)
+		{
+			case ARRIBA: 
+			opcionsel--;
+			if (opcionsel == 0)
+			{
+				opcionsel=3;
+			}
+			break;
+
+			case ABAJO: 
+			opcionsel++;
+			if (opcionsel == 4)
+			{
+				opcionsel=1;
+			}
+			break;
+
+			case ENTER: 
+			repetir=false;
+			break;
+		}
+		//cout<<"\n\tOpcion: ";
+		//cin>>opcion;
+	
+
+
+	}while (repetir);
+	switch(opcionsel)
 		{
 			case 1:
-             a++;
             system("cls");
             jugar();
+			menu();
 			break;
 
 			case 2:
             system("cls");
-            puntuaciones(a);
+			margin();
+			sortearScore();
+			presentarPuntajes();
+			end();
+			menu();
 			break;
 
 			case 3:
             repetir=false;
-			break;
+			system("cls");
+			break;		
 		}
-
-
-	}while (repetir); 
-}
-
-
-void guardarPos(){
-	cuerpo[indice][0]=x;
-	cuerpo[indice][1]=y;
-	indice++;
-	if(indice==tamaño)
-		indice=1;
-}
-
-void pintarCuerpo(){
-	setColor(BLACK,GREEN);
-	for(int i=1; i<tamaño; i++){
-		gotoxy(cuerpo[i][0], cuerpo[i][1]);
-		cout<<"+";
-	}
-}
-
-void borrarCuerpo(){
-	gotoxy(cuerpo[indice][0],cuerpo[indice][1]);
-	cout<<" ";
-}
-
-void input(){
-	if(kbhit()){
-			tecla=getch();
-			switch(tecla){
-				case ARRIBA: 
-					if(dir!=2)
-						dir=1;
-					break;
-				case ABAJO:	
-					if(dir!=1)
-						dir=2;
-					break;
-				case DERECHA: 
-					if(dir!=4)
-						dir=3;
-					break;
-				case IZQUIERDA:
-					if(dir!=3)
-						dir=4;
-					break;
-			}
-	}
-}
-
-void crearComida(){
-	setColor(BLACK, CYAN);
-	if(x == xc && y == yc){
-		xc=(rand()%100)+2;
-		yc=(rand()%18+6);
-		tamaño++;
-		gotoxy(xc,yc);
-		cout<<char(254);
-		score++;
-	}
-}
-
-bool terminarJuego(){
-	if(y==5||y==25||x==1||x==100)
-		return true;
-	for(int i=tamaño-1; i>0;i--){
-		if(cuerpo[i][0]==x && cuerpo[i][1]==y)
-			return true;
-	}
-	return false;
-}
-
-void printPuntos(){
-	setColor(BLACK,LBLUE);
-	gotoxy(70,4);
-	cout<<"Score:"<<score;
-}
-
-void cambiarVel(){
-	if(score == m*2){
-		vel-=5000;
-		m++;
-	}
+	 
 }
 
 void jugar()
 
 {
-	x=10;
-	y=12;
-	dir=3;
-    ShowConsoleCursor(false);
+	int cuerpo[200][2];
+indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
+game;
+tecla;
 	setColor(BLACK, CYAN);
 	xc=(rand()%95)+2;
 	yc=(rand()%18+6);
@@ -157,23 +167,40 @@ void jugar()
 		else
 			usleep(vel*1.5);
 	}
-    end();
-
-}
-
-void puntuaciones(int a)
-{
-    for (int i = 0; i < a; i++)
-    {
-        gotoxy(5, i+3);
-        cout<<"SCORE: "<<score;
-    }
-    end();
+	invertirScore();
+	for (auto &&i : lstPuntajes)
+	{
+		puntaje p;
+		if(score>i.pun){
+			p.pos=i.pos;
+			p.pun=score;
+			system("cls");
+			margin();
+			gotoxy(7,8);
+			cout<<"Puntaje alto!";
+			gotoxy(7,9);
+			cout<<"Ingrese su nombre: ";
+			ShowConsoleCursor(true);
+			cin>>p.nombre;
+			cin.ignore(10000, '\n');
+			ShowConsoleCursor(false);
+			lstPuntajes.push_back(p);
+			sortearScore();
+			lstPuntajes.pop_back();
+			escribirArchivoBinario();
+    		end();
+			break;
+		}
+	}
 
 }
 
 int main()
 {
+	ShowConsoleCursor(false);
+	leerArchivoBinario();
+	int punt[100];
+	int b=0;
 	menu();
 }		
 
@@ -181,6 +208,3 @@ int main()
 //Menu con seleccion de flecha
 //Puntajes altos que se guardan entre cada ejecucion.	
 
-
-//Menu con seleccion de flecha
-//Puntajes altos que se guardan entre cada ejecucion.

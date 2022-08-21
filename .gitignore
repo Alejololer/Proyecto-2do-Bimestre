@@ -3,3 +3,13 @@ Makefile
 .vscode/settings.json
 .vscode/tasks.json
 src/El pepo.cpp
+output/escribir.exe
+output/main2.exe
+output/main3.exe
+output/test.exe
+resources/scores.txt
+src/escribir.cpp
+src/main2.cpp
+src/main3.cpp
+src/Parte Sebastian.pptx
+src/test.cpp

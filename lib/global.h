@@ -21,7 +21,7 @@ int cuerpo[200][2];
 int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
 bool game;
 char tecla;
-const string clave="TA1997";
+const string clave="GN1976";
 enum colors{
     BLACK=0,
     BLUE=1,

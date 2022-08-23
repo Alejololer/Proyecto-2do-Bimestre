@@ -28,21 +28,6 @@ void reiniciarData(){
 	}
 }
 
-bool leerArchivoBinario()
-{
-    ifstream rf(pathfilebin, ios::in | ios::binary);
-    cout << "Abrir archivo:" << pathfilebin << endl;
-    if(!rf) 
-    {
-        cout << " << error >>" << endl;
-        return false;
-    } 
-    puntaje tp[1];
-    while(rf.read((char *) &tp[0], sizeof(puntaje)))
-        lstPuntajes.push_back(tp[0]);
-    rf.close();
-    return true;
-}
 
 void presentarPuntaje(puntaje p)
 {

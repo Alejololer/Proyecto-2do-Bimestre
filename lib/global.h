@@ -51,6 +51,22 @@ const string pathfile= "..\\resources\\scores.txt";
 const string pathfilebin= "..\\resources\\scores.dat";
 
 
+bool leerArchivoBinario()
+{
+    ifstream rf(pathfilebin, ios::in | ios::binary);
+    cout << "Abrir archivo:" << pathfilebin << endl;
+    if(!rf) 
+    {
+        cout << " << error >>" << endl;
+        return false;
+    } 
+    puntaje tp[1];
+    while(rf.read((char *) &tp[0], sizeof(puntaje)))
+        lstPuntajes.push_back(tp[0]);
+    rf.close();
+    return true;
+}
+
 void sortearScore(){
 	int x=1;
 	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
@@ -259,7 +275,7 @@ void chequearScore(){
 			gotoxy(7,9);
 			cout<<"Ingrese su nombre: ";
 			ShowConsoleCursor(true);
-			cin>>p.nombre;
+			cin.getline(p.nombre,10);
 			ShowConsoleCursor(false);
 			cin.ignore(10000, '\n');
 			lstPuntajes.push_back(p);

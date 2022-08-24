@@ -16,6 +16,11 @@ using namespace std;
 #define ABAJO 80
 #define ESC 27
 #define ENTER 13
+#define ARRIBA2 119
+#define IZQUIERDA2 97
+#define DERECHA2 100
+#define ABAJO2 115
+//Definicion de los inputs que usaremos en el programa
 
 int cuerpo[200][2];
 int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
@@ -137,6 +142,7 @@ void margin()
 	gotoxy(30,3);
 	cout<<("Recreacion del juego de la serpiente");
 	gotoxy(3,4);
+	setColor (BLACK,BROWN);
 	cout<<("Por: Alejandro Alvarez, Alejandro Aleman");
 	for(i=1;i<=100;i++)
 	{
@@ -198,8 +204,6 @@ void pintarCuerpo(){
 	for(int i=1; i<tamaño; i++){
 		gotoxy(cuerpo[i][0], cuerpo[i][1]);
 		cout<<"+";
-        gotoxy(0,0);
-        cout<<" ";
 	}
 }
 // Exploramos las posiciones e imprimimos la serpiente
@@ -210,7 +214,7 @@ void borrarCuerpo(){
 }
 // Para simular el movimiento procedemos a eliminar la ultima posicion de la serpiente
 
-void input(){
+void leerInput(){
 	if(kbhit()){
 			tecla=getch();
 			switch(tecla){
@@ -218,7 +222,15 @@ void input(){
 					if(dir!=2)
 						dir=1;
 					break;
+				case ARRIBA2: 
+					if(dir!=2)
+						dir=1;
+					break;
 				case ABAJO:	
+					if(dir!=1)
+						dir=2;
+					break;
+				case ABAJO2:	
 					if(dir!=1)
 						dir=2;
 					break;
@@ -226,7 +238,15 @@ void input(){
 					if(dir!=4)
 						dir=3;
 					break;
+				case DERECHA2: 
+					if(dir!=4)
+						dir=3;
+					break;
 				case IZQUIERDA:
+					if(dir!=3)
+						dir=4;
+					break;
+				case IZQUIERDA2:
 					if(dir!=3)
 						dir=4;
 					break;
@@ -263,7 +283,7 @@ bool terminarJuego(){
 //alguna parte de su cuerpo, el juego termina al regresar un valor verdadero.
 
 void printPuntos(){
-	setColor(BLACK,LBLUE);
+	setColor(BLACK,BROWN);
 	gotoxy(70,4);
 	cout<<"Score:"<<score;
 }
@@ -294,7 +314,8 @@ void chequearScore(){
 			ShowConsoleCursor(true);
 			cin.getline(p.nombre,10);
 			ShowConsoleCursor(false);
-			cin.ignore(10000, '\n');
+			cin.clear();
+			fflush(stdin);
 			lstPuntajes.push_back(p);
 			sortearScore();
 			lstPuntajes.pop_back();

@@ -3,7 +3,7 @@
 using namespace std;
 void jugar();
 
-void reiniciarData(){
+void reiniciarDat(){
 	string input;
 	gotoxy(7,8);
 	cout<<"Ingrese la clave para reiniciar los datos: ";
@@ -11,7 +11,7 @@ void reiniciarData(){
 	cin>>input;
 	ShowConsoleCursor(false);
 	cin.ignore(10000, '\n');
-	if(input==clave){
+	if(input==CLAVE){
 		for (auto &&i : lstPuntajes)
 		{
 			char aux[10]="-";
@@ -46,6 +46,43 @@ void presentarPuntajes(){
 		presentarPuntaje(i);
 	}
 	
+}
+
+void jugar()
+
+{
+	int cuerpo[200][2];
+indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
+game;
+tecla;
+	setColor(BLACK, CYAN);
+	xc=(rand()%95)+2;
+	yc=(rand()%18+6);
+	gotoxy(xc,yc);
+	cout<<char(254);
+	margin();
+	while(tecla != ESC && !terminarJuego()){
+		borrarCuerpo();
+		guardarPos();
+		pintarCuerpo();
+		crearComida();
+		printPuntos();
+		input();
+		input();	
+		cambiarVel();
+		switch(dir){
+			case 1: y--; break;
+			case 2: y++; break;	
+			case 3: x++; break;
+			case 4: x--; break;
+		}
+		if(dir==3||dir==4)
+			usleep(vel);
+		else
+			usleep(vel*1.5);
+	}
+	invertirScore();
+	chequearScore();
 }
 
 void menu()
@@ -122,7 +159,7 @@ void menu()
 			case 3:
 			system("cls");
 			margin();
-			reiniciarData();
+			reiniciarDat();
 			cont();
 			menu();
 			break;
@@ -135,42 +172,6 @@ void menu()
 	 
 }
 
-void jugar()
-
-{
-	int cuerpo[200][2];
-indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
-game;
-tecla;
-	setColor(BLACK, CYAN);
-	xc=(rand()%95)+2;
-	yc=(rand()%18+6);
-	gotoxy(xc,yc);
-	cout<<char(254);
-	margin();
-	while(tecla != ESC && !terminarJuego()){
-		borrarCuerpo();
-		guardarPos();
-		pintarCuerpo();
-		crearComida();
-		printPuntos();
-		input();
-		input();	
-		cambiarVel();
-		switch(dir){
-			case 1: y--; break;
-			case 2: y++; break;	
-			case 3: x++; break;
-			case 4: x--; break;
-		}
-		if(dir==3||dir==4)
-			usleep(vel);
-		else
-			usleep(vel*1.5);
-	}
-	invertirScore();
-	chequearScore();
-}
 
 int main()
 {
@@ -181,7 +182,4 @@ int main()
 	menu();
 }		
 
-
-//Menu con seleccion de flecha
-//Puntajes altos que se guardan entre cada ejecucion.	
 

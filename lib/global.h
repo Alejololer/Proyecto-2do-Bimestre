@@ -19,9 +19,11 @@ using namespace std;
 
 int cuerpo[200][2];
 int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
+//"x" y "y" nos sirven para tener las coordenadas de la serpiente
+//"xc" y "yc" son las coordenadas de la comida;
 bool game;
 char tecla;
-const string clave="GN1976";
+const string CLAVE="GN1976";
 enum colors{
     BLACK=0,
     BLUE=1,
@@ -40,16 +42,16 @@ enum colors{
     YELLOW=14,
     WHITE=15
 };
-
+//enumeracion de colores para usar el procedimiento setColor
 struct puntaje{
     char nombre[10];
     int pun;
     int pos;
 };
 vector <puntaje> lstPuntajes;
+//declaracion de la estructura y el vector para listar los puntajes
 const string pathfile= "..\\resources\\scores.txt";
 const string pathfilebin= "..\\resources\\scores.dat";
-
 
 bool leerArchivoBinario()
 {
@@ -66,6 +68,7 @@ bool leerArchivoBinario()
     rf.close();
     return true;
 }
+//Funcion sencilla para conocer si el archivo se hizo correctamente
 
 void sortearScore(){
 	int x=1;
@@ -79,13 +82,15 @@ void sortearScore(){
 	}
 	
 }
+//Este procedimiento ordena los puntajes en funcion del int score, de mayor a menor
 
 void invertirScore(){
 	sort(lstPuntajes.begin(),lstPuntajes.end(), [](puntaje a, puntaje b){
 		return a.pun<b.pun;
 	});
 }
-
+//Este procedimiento ordena los puntajes en funcion del int score, de menor a mayor
+//para realizar el chequeo
 void escribirArchivoBinario()
 {
     ofstream f(pathfilebin, ios::out | ios_base::binary );
@@ -96,12 +101,14 @@ void escribirArchivoBinario()
     }
     f.close();
 }
+//Procedmiento sencillo para escribir los puntajes
 
 void setColor(int Background, int Text){
     int colorTexto= Text + (Background*16);
     HANDLE terminal = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(terminal, colorTexto);    
 }
+//Procedimiento para cambiar el color de la consola
 void gotoxy(int x, int y)
 {
     HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -110,6 +117,7 @@ void gotoxy(int x, int y)
     dwPos.Y=y;
     SetConsoleCursorPosition(hcon, dwPos);
 }
+//Procedimiento para mover el cursor de la consola y ayudar a crear una pseudo GUI
 void cont()
 {
     setColor (BLACK,RED);
@@ -118,13 +126,7 @@ void cont()
     getch();
 	setColor(BLACK,WHITE);
 }
-void end()
-{
-    setColor (BLACK,RED);
-    gotoxy(30,22);
-    cout<<("<<PULSE CUALQUIER TECLA PARA FINALIZAR>>");
-    getch();
-}
+//Procedimiento para cuando el juego se acaba, solo pide presionar una tecla para continuar.
 void margin()
 {
 	//cabecera
@@ -167,6 +169,7 @@ void margin()
     gotoxy(100,25);
     cout<<char(188);
 }
+//Procedimiento que imprime el margen que presenta.
 
 void ShowConsoleCursor(bool showFlag)
 {
@@ -178,6 +181,8 @@ void ShowConsoleCursor(bool showFlag)
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+//Procedimiento para mostrar o no mostrar el cursor de la consola, sirve para que no
+//se observen las actualizaciones al jugar.
 
 void guardarPos(){
 	cuerpo[indice][0]=x;
@@ -186,6 +191,7 @@ void guardarPos(){
 	if(indice==tamaño)
 		indice=1;
 }
+//Guardamos la posicion en la matriz cuerpo y reiniciamos el indice al ser igual al tamanio
 
 void pintarCuerpo(){
 	setColor(BLACK,GREEN);
@@ -196,11 +202,13 @@ void pintarCuerpo(){
         cout<<" ";
 	}
 }
+// Exploramos las posiciones e imprimimos la serpiente
 
 void borrarCuerpo(){
 	gotoxy(cuerpo[indice][0],cuerpo[indice][1]);
 	cout<<" ";
 }
+// Para simular el movimiento procedemos a eliminar la ultima posicion de la serpiente
 
 void input(){
 	if(kbhit()){
@@ -225,6 +233,8 @@ void input(){
 			}
 	}
 }
+//Leemos el input del usuario con kbhit, y con las definiciones que se dieron previamente
+//podemos definir si es que queremos que la serpiente suba o bajo
 
 void crearComida(){
 	setColor(BLACK, CYAN);
@@ -237,6 +247,8 @@ void crearComida(){
 		score++;
 	}
 }
+//randomizamos las posiciones de la comida cuando la cabeza de la serpiente sea igual
+//a las coordenadas y aumentamos el tamanio y el puntaje
 
 bool terminarJuego(){
 	if(y==5||y==25||x==1||x==100)
@@ -247,12 +259,15 @@ bool terminarJuego(){
 	}
 	return false;
 }
+//Si es que las coordenadas de la serpiente llegan a ser iguales a la del margen, o a
+//alguna parte de su cuerpo, el juego termina al regresar un valor verdadero.
 
 void printPuntos(){
 	setColor(BLACK,LBLUE);
 	gotoxy(70,4);
 	cout<<"Score:"<<score;
 }
+//Procedimiento sencillo para imprimir el puntaje en la parte superior de la pantalla.
 
 void cambiarVel(){
 	if(score == m*2){
@@ -260,12 +275,14 @@ void cambiarVel(){
 		m++;
 	}
 }
+//Procedimiento para chequear si el puntaje es multiplo de 2, aumentando la velocidad
+//al disminuir el tiempo de espera del ciclo.
 
 void chequearScore(){
 	for (auto &&i : lstPuntajes)
 	{
-		puntaje p;
 		if(score>i.pun){
+			puntaje p;
 			p.pos=i.pos;
 			p.pun=score;
 			system("cls");
@@ -287,3 +304,7 @@ void chequearScore(){
 		}
 	}
 }
+//Procedimiento para comparar el puntaje logrado con los puntajes de la lista de puntajes
+//altos, si es verdadero creamos una estructura donde pedimos el nombre, cogemos el puntaje y
+//robamos la posicion e insertamos la estructura en la posicion, reorganizamos la lista en base
+//a puntaje y eliminamos el ultimo.

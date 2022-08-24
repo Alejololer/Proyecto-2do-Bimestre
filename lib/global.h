@@ -204,6 +204,8 @@ void pintarCuerpo(){
 	for(int i=1; i<tamaño; i++){
 		gotoxy(cuerpo[i][0], cuerpo[i][1]);
 		cout<<"+";
+		gotoxy(0,0);
+		cout<<" ";
 	}
 }
 // Exploramos las posiciones e imprimimos la serpiente

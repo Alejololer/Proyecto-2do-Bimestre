@@ -24,6 +24,7 @@ void reiniciarDat(){
 			char aux[10]=" ";
 			i.pun=0;
 			strncpy(i.nombre, aux, 10);
+			//copiamos los caracteres de entrada (aux) a i.nombre
 		}
 		gotoxy(7,9);
 		setColor(BLACK, GREEN);

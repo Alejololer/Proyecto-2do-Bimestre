@@ -155,7 +155,7 @@ void menu()
 
 		do{
 			tecla=getch();
-		} while (tecla != ARRIBA && tecla != ARRIBA2 && tecla != ABAJO && tecla != ABAJO2 && tecla != ENTER);
+		} while (tecla != ARRIBA  && tecla != ABAJO && tecla != ENTER);
 		switch (tecla)
 		{
 			case ARRIBA: 
@@ -165,23 +165,8 @@ void menu()
 				opcionsel=4;
 			}
 			break;
-			case ARRIBA2: 
-			opcionsel--;
-			if (opcionsel == 0)
-			{
-				opcionsel=4;
-			}
-			break;
 
 			case ABAJO: 
-			opcionsel++;
-			if (opcionsel == 5)
-			{
-				opcionsel=1;
-			}
-			break;
-
-			case ABAJO2: 
 			opcionsel++;
 			if (opcionsel == 5)
 			{

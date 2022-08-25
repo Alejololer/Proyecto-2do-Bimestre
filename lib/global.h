@@ -16,10 +16,6 @@ using namespace std;
 #define ABAJO 80
 #define ESC 27
 #define ENTER 13
-#define ARRIBA2 119
-#define IZQUIERDA2 97
-#define DERECHA2 100
-#define ABAJO2 115
 //Definicion de los inputs que usaremos en el programa
 
 int cuerpo[200][2];
@@ -224,15 +220,7 @@ void leerInput(){
 					if(dir!=2)
 						dir=1;
 					break;
-				case ARRIBA2: 
-					if(dir!=2)
-						dir=1;
-					break;
 				case ABAJO:	
-					if(dir!=1)
-						dir=2;
-					break;
-				case ABAJO2:	
 					if(dir!=1)
 						dir=2;
 					break;
@@ -240,15 +228,7 @@ void leerInput(){
 					if(dir!=4)
 						dir=3;
 					break;
-				case DERECHA2: 
-					if(dir!=4)
-						dir=3;
-					break;
 				case IZQUIERDA:
-					if(dir!=3)
-						dir=4;
-					break;
-				case IZQUIERDA2:
 					if(dir!=3)
 						dir=4;
 					break;

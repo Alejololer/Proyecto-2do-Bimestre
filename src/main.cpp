@@ -1,3 +1,8 @@
+/********************************************************************************
+ Date:      26.08.2022
+ Developer: Carlos Aleman y Alejandro Alvarez 
+ Subject:   Proyecto 2do Bimestre
+********************************************************************************/
 #include "..\lib\global.h"
 #include <cstdlib>
 using namespace std;
@@ -65,8 +70,6 @@ void jugar()
 {
 	int cuerpo[200][2];
 indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
-game;
-tecla;
 	setColor(BLACK, CYAN);
 	xc=(rand()%95)+2;
 	yc=(rand()%18+6);

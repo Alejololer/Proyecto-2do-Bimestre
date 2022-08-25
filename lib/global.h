@@ -23,7 +23,7 @@ using namespace std;
 //Definicion de los inputs que usaremos en el programa
 
 int cuerpo[200][2];
-int indice=1, tamaño=3, x=10, y=12, dir=3, xc, yc, score=0, m=1, vel=95000 ;
+int indice, tamaño, x, y, dir, xc, yc, score, m=1, vel=95000 ;
 //"x" y "y" nos sirven para tener las coordenadas de la serpiente
 //"xc" y "yc" son las coordenadas de la comida;
 bool game;

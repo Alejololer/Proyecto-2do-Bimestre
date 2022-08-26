@@ -2,6 +2,7 @@
  Date:      26.08.2022
  Developer: Carlos Aleman y Alejandro Alvarez 
  Subject:   Proyecto 2do Bimestre
+ ©2022 SnakeR
 ********************************************************************************/
 #include "..\lib\global.h"
 #include <cstdlib>

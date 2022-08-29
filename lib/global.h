@@ -252,6 +252,7 @@ void crearComida(){
 //randomizamos las posiciones de la comida cuando la cabeza de la serpiente sea igual
 //a las coordenadas y aumentamos el tamanio y el puntaje
 
+
 bool terminarJuego(){
 	if(y==5||y==25||x==1||x==100)
 		return true;
@@ -280,6 +281,17 @@ void cambiarVel(){
 //Procedimiento para chequear si el puntaje es multiplo de 2, aumentando la velocidad
 //al disminuir el tiempo de espera del ciclo.
 
+void pedirNombre(string etiqueta,puntaje &p){
+	gotoxy(7,9);
+	cout<<etiqueta;
+	ShowConsoleCursor(true);
+	cin.getline(p.nombre,10);
+	ShowConsoleCursor(false);
+	cin.clear();
+	fflush(stdin);
+}
+//Procedimiento para mantener buenas practicas
+
 void chequearScore(){
 	for (auto &&i : lstPuntajes)
 	{
@@ -291,13 +303,7 @@ void chequearScore(){
 			margin();
 			gotoxy(7,8);
 			cout<<"Puntaje alto!";
-			gotoxy(7,9);
-			cout<<"Ingrese su nombre: ";
-			ShowConsoleCursor(true);
-			cin.getline(p.nombre,10);
-			ShowConsoleCursor(false);
-			cin.clear();
-			fflush(stdin);
+			pedirNombre("Ingrese su nombre: ", p);
 			lstPuntajes.push_back(p);
 			sortearScore();
 			lstPuntajes.pop_back();

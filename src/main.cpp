@@ -7,6 +7,9 @@
 #include <cstdlib>
 using namespace std;
 
+//RECORDATORIO: La clave para reiniciar el puntaje es GN1976, se lo puede observar
+//en global.h
+
 void reiniciarDat(){
 	string input;
 	gotoxy(7,8);

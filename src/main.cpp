@@ -2,6 +2,7 @@
  Date:      26.08.2022
  Developer: Carlos Aleman y Alejandro Alvarez 
  Subject:   Proyecto 2do Bimestre
+ ©2022 SnakeR
 ********************************************************************************/
 #include "..\lib\global.h"
 #include <cstdlib>
@@ -32,6 +33,7 @@ void reiniciarDat(){
 		gotoxy(7,9);
 		setColor(BLACK, GREEN);
 		cout<<"Puntajes reiniciados!";
+		escribirArchivoBInario();
 	}
 	else{
 		gotoxy(7,9);

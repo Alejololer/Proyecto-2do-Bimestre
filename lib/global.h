@@ -171,7 +171,7 @@ void margin()
     gotoxy(100,25);
     cout<<char(188);
 }
-//Procedimiento que imprime el margen que presenta.
+//Procedimiento que imprime el margen que se presenta.
 
 void ShowConsoleCursor(bool showFlag)
 {

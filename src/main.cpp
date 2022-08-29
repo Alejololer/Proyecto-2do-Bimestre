@@ -33,7 +33,7 @@ void reiniciarDat(){
 		gotoxy(7,9);
 		setColor(BLACK, GREEN);
 		cout<<"Puntajes reiniciados!";
-		escribirArchivoBInario();
+		escribirArchivoBinario();
 	}
 	else{
 		gotoxy(7,9);
